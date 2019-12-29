@@ -27,7 +27,7 @@ d3.tsv("data/ages.tsv").then(function(data){
                 return d.age * 2;
             })
             .attr("fill", function(d){
-                if (d.name == "Tony") {
+                if (d.name == "Andrew") {
                     return "blue";
                 }
                 else {
