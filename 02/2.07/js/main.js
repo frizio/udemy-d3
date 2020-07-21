@@ -4,8 +4,8 @@
 *    2.7 - Loading external data
 */
 
-d3.tsv("data/ages.tsv").then(function(data){
-    data.forEach(function(d){
+d3.tsv("data/ages.tsv").then( (data) => {
+    data.forEach( (d) => {
         d.age = +d.age;
     });
 
@@ -28,12 +28,12 @@ d3.tsv("data/ages.tsv").then(function(data){
             })
             .attr("fill", function(d){
                 if (d.name == "Andrew") {
-                    return "blue";
+                    return "green";
                 }
                 else {
                     return "red";
                 }
             });
 }).catch(function(error){
-    console.log(error);
+    alert(error);
 })
