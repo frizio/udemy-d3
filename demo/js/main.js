@@ -35,6 +35,22 @@ d3.json("data/buildings.json")
     var y = d3.scaleLinear()
               .domain( [0, d3.max(data, (d)=>{return d.height}) ] )
               .range ( [0, height] );
+    var xAxisCall = d3.axisBottom(x);
+    g.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0, " + height + ")")
+        .call(xAxisCall)
+     .selectAll("text")
+        .attr("y", "10")
+        .attr("x", "-5")
+        .attr("text-anchor", "end")
+        .attr("transform", "rotate(-40)");
+    var yAxisCall = d3.axisLeft(y)
+                      .ticks(3)
+                      .tickFormat( (d)=>{return d + "m"} );
+    g.append("g")
+     .attr("class", "y-axis")
+     .call(yAxisCall);;
     var rects = g.selectAll("rect")
       .data(data)
       .enter()
