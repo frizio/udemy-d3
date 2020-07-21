@@ -16,7 +16,7 @@ d3.json("data/buildings.json")
         d.height = + d.height;
     })
     var y = d3.scaleLinear()
-              .domain([0,10000])
+              .domain([0,1000])
               .range([0,400]);
     var rects = svg.selectAll("rect")
       .data(data)
