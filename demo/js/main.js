@@ -6,7 +6,7 @@
 
 document.getElementById("title").innerHTML = "Demo D3.js - Versione: " + d3.version;
 
-var margin = { left:100, right:10, top:10, bottom:100 };
+var margin = { left:100, right:10, top:10, bottom:150 };
 
 var width = 600 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
@@ -17,6 +17,25 @@ var svg = d3.select("#chart-area").append("svg")
 
 var g = svg.append("g")
            .attr("transform", "translate(" + margin.left + ", " + margin.top + ")")
+
+// X Label
+g.append("text")
+    .attr("class", "x axis-label")
+    .attr("x", width / 2)
+    .attr("y", height + 140)
+    .attr("font-size", "20px")
+    .attr("text-anchor", "middle")
+    .text("The word's tallest buildings");
+
+// Y Label
+g.append("text")
+    .attr("class", "y axis-label")
+    .attr("x", - (height / 2))
+    .attr("y", -60)
+    .attr("font-size", "20px")
+    .attr("text-anchor", "middle")
+    .attr("transform", "rotate(-90)")
+    .text("Height (m)");
 
 d3.json("data/buildings.json")
   .then( (data) => {
