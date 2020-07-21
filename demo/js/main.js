@@ -15,17 +15,24 @@ d3.json("data/buildings.json")
     data.forEach( (d) => {
         d.height = + d.height;
     })
+    var x = d3.scaleBand()
+              .domain(
+                data.map((d) =>{
+                  return d.name;
+                })
+              )
+              .range([0, 400])
+              .paddingInner(0.3)
+              .paddingOuter(0.3);
     var y = d3.scaleLinear()
-              .domain([0,1000])
-              .range([0,400]);
+              .domain( [0, d3.max(data, (d)=>{return d.height}) ] )
+              .range ( [0, 400] );
     var rects = svg.selectAll("rect")
       .data(data)
       .enter()
       .append("rect")
-      .attr("y", 20)
-      .attr("x", (d, i) => {
-        return ((i+1) * 60);
-      })
+      .attr("y", 0)
+      .attr("x", (d)=>{return x(d.name)})
       .attr("width", 40)
       .attr("height", (d) => {
         return y(d.height);
