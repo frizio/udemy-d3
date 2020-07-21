@@ -7,7 +7,7 @@
 document.getElementById("title").innerHTML = "Demo D3.js - Versione: " + d3.version;
 
 var svg = d3.select("#chart-area").append("svg")
-            .attr("width", 400)
+            .attr("width", 600)
             .attr("height", 400);
 
 d3.json("data/buildings.json")
@@ -21,9 +21,9 @@ d3.json("data/buildings.json")
                   return d.name;
                 })
               )
-              .range([0, 400])
-              .paddingInner(0.3)
-              .paddingOuter(0.3);
+              .range([0, 600])
+              .paddingInner(0.5)
+              .paddingOuter(0.5);
     var y = d3.scaleLinear()
               .domain( [0, d3.max(data, (d)=>{return d.height}) ] )
               .range ( [0, 400] );
