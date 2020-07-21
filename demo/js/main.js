@@ -53,7 +53,7 @@ d3.json("data/buildings.json")
               .paddingOuter(0.5);
     var y = d3.scaleLinear()
               .domain( [0, d3.max(data, (d)=>{return d.height}) ] )
-              .range ( [0, height] );
+              .range ( [height, 0] );
     var xAxisCall = d3.axisBottom(x);
     g.append("g")
         .attr("class", "x axis")
@@ -74,11 +74,11 @@ d3.json("data/buildings.json")
       .data(data)
       .enter()
       .append("rect")
-      .attr("y", 0)
+      .attr("y", (d)=>{return y(d.height)})
       .attr("x", (d)=>{return x(d.name)})
       .attr("width", 40)
       .attr("height", (d) => {
-        return y(d.height);
+        return height - y(d.height);
       })
       .attr("fill", (d) => {
         return "blue";
