@@ -17,11 +17,10 @@ d3.json("data/buildings.json").then(function(data){
     });
 
     var y = d3.scaleLinear()
-        .domain([0, 828])
-        .range([0, 400]);
+          .domain([0, 828])
+          .range([0, 400]);
 
-    var rects = svg.selectAll("rect")
-            .data(data)
+    var rects = svg.selectAll("rect").data(data)
         .enter()
             .append("rect")
             .attr("y", 0)

@@ -1,22 +1,22 @@
 [
 	{
 		"name": "Burj Khalifa",
-		"height": "350"
+		"height": "8000"
 	},
 	{
 		"name": "Shanghai Tower",
-		"height": "263.34"
+		"height": "9000"
 	},
 	{
 		"name": "Abraj Al-Bait Clock Tower",
-		"height": "254.04"
+		"height": "6000"
 	},
 	{
 		"name": "Ping An Finance Centre",
-		"height": "253.20"
+		"height": "2000"
 	},
 	{
 		"name": "Lotte World Tower",
-		"height": "230.16"
+		"height": "1000"
 	}
 ]
