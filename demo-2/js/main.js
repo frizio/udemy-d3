@@ -60,10 +60,12 @@ d3.json("data/revenues.json").then( (data) => {
           d.profit = +d.profit
       });
       //console.log(data);
+      console.log(data.slice(1));
 
       d3.interval( 
         () => {
-          update(data);
+          var newData = flag ? data : data.slice(1);
+          update(newData);
           flag = !flag;
         }, 
         time);
@@ -90,7 +92,9 @@ function update(data) {
   
   // JOIN new data with old element
   var rects = g.selectAll("rect")
-               .data(data)
+                  .data(data, (d) => {
+                    return d.month
+                  })
   
   // EXIT old element not present in the new data.
   rects.exit()
