@@ -63,6 +63,7 @@ d3.json("data/revenues.json").then( (data) => {
         }, 
         1500);
       
+      update(data);
 })
 
 function update(data) {
