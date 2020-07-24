@@ -70,9 +70,20 @@ d3.json("data/revenues.json").then( (data) => {
           
       rects.enter()
           .append("rect")
-              //.attr("y", function(d){ return y(d.revenue); })
-              //.attr("x", function(d){ return x(d.month) })
-              //.attr("height", function(d){ return height - y(d.revenue); })
-              //.attr("width", x.bandwidth)
-              //.attr("fill", "blue");
-  })
+              .attr("y", function(d){ return y(d.revenue); })
+              .attr("x", function(d){ return x(d.month) })
+              .attr("height", function(d){ return height - y(d.revenue); })
+              .attr("width", x.bandwidth)
+              .attr("fill", "blue");
+      
+      d3.interval( 
+        () => {
+          update(data);
+        }, 
+        1500);
+})
+
+function update(data) {
+  console.log("Call Update function");
+  console.log(data);
+}
