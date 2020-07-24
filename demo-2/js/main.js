@@ -16,16 +16,16 @@ var xAxisGroup = g.append("g")
                   
 var yAxisGroup = g.append("g")
                   .attr("class", "y axis")
-                  
+
 
 // X Scale
 var x = d3.scaleBand()
-.range([0, width])
-.padding(0.2);
+          .range([0, width])
+          .padding(0.2);
 
 // Y Scale
 var y = d3.scaleLinear()
-.range([height, 0]);
+          .range([height, 0]);
 
 // X Label
 g.append("text")
@@ -46,23 +46,20 @@ g.append("text")
     .attr("transform", "rotate(-90)")
     .text("Revenues ($)");
 
+
 d3.json("data/revenues.json").then( (data) => {
 
-      console.log(data);
-  
       // Clean data
       data.forEach( (d) => {
           d.revenue = +d.revenue;
       });
 
-      console.log(data);
-      
       d3.interval( 
         () => {
           update(data);
         }, 
         1500);
-      
+
       update(data);
 })
 
