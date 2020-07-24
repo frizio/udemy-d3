@@ -58,7 +58,7 @@ d3.json("data/revenues.json").then( (data) => {
         () => {
           update(data);
         }, 
-        1500);
+        2000);
 
       update(data);
 })
@@ -78,12 +78,21 @@ function update(data) {
                     .tickFormat((d) => { return "$" + d; });
   yAxisGroup.call(yAxisCall);
   
-
-  //Bars
+  // JOIN new data with old element
   var rects = g.selectAll("rect")
                .data(data)
-  console.log(rects);
+  
+  // EXIT old element not present in the new data.
+  rects.exit().remove();
 
+  // UPDATE old element in the new data
+  rects.attr("y", function(d){ return y(d.revenue); })
+       .attr("x", function(d){ return x(d.month) })
+       .attr("height", function(d){ return height - y(d.revenue); })
+       .attr("width", x.bandwidth)
+  
+
+  // ENTER new element present in the new data
   rects.enter()
     .append("rect")
       .attr("y", function(d){ return y(d.revenue); })
@@ -91,6 +100,5 @@ function update(data) {
       .attr("height", function(d){ return height - y(d.revenue); })
       .attr("width", x.bandwidth)
       .attr("fill", "blue");
-  console.log(rects);
 
 }
