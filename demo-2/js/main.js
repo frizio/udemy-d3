@@ -3,6 +3,8 @@ var margin = { left:80, right:20, top:50, bottom:100 };
 var width = 600 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
 
+var flag = true;
+
 var g = d3.select("#chart-area")
             .append("svg")
                 .attr("width", width + margin.left + margin.right)
@@ -37,7 +39,7 @@ g.append("text")
     .text("Month");
 
 // Y Label
-g.append("text")
+var yLabel = g.append("text")
     .attr("class", "y axis-label")
     .attr("x", - (height / 2))
     .attr("y", -60)
@@ -52,11 +54,14 @@ d3.json("data/revenues.json").then( (data) => {
       // Clean data
       data.forEach( (d) => {
           d.revenue = +d.revenue;
+          d.profit = +d.profit
       });
+      //console.log(data);
 
       d3.interval( 
         () => {
           update(data);
+          flag = !flag;
         }, 
         2000);
 
@@ -66,8 +71,10 @@ d3.json("data/revenues.json").then( (data) => {
 function update(data) {
   console.log("Call Update function");
 
+  var value = flag ? "revenue": "profit";
+
   x.domain(data.map( (d) => { return d.month; } ))
-  y.domain([0, d3.max(data, (d) => { return d.revenue; })])
+  y.domain([0, d3.max(data, (d) => { return d[value]; })])
 
   // X Axis
   var xAxisCall = d3.axisBottom(x);
@@ -86,19 +93,21 @@ function update(data) {
   rects.exit().remove();
 
   // UPDATE old element in the new data
-  rects.attr("y", function(d){ return y(d.revenue); })
+  rects.attr("y", function(d){ return y(d[value]); })
        .attr("x", function(d){ return x(d.month) })
-       .attr("height", function(d){ return height - y(d.revenue); })
+       .attr("height", function(d){ return height - y(d[value]); })
        .attr("width", x.bandwidth)
   
 
   // ENTER new element present in the new data
   rects.enter()
     .append("rect")
-      .attr("y", function(d){ return y(d.revenue); })
+      .attr("y", function(d){ return y(d[value]); })
       .attr("x", function(d){ return x(d.month) })
-      .attr("height", function(d){ return height - y(d.revenue); })
+      .attr("height", function(d){ return height - y(d[value]); })
       .attr("width", x.bandwidth)
       .attr("fill", "blue");
 
+  var label = flag ? 'Revenue' : 'Profit' ;
+  yLabel.text(label);
 }
