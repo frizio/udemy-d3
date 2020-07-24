@@ -80,17 +80,17 @@ function update(data) {
   
 
   //Bars
-  /*
   var rects = g.selectAll("rect")
-  .data(data)
-  
+               .data(data)
+  console.log(rects);
+
   rects.enter()
-  .append("rect")
+    .append("rect")
       .attr("y", function(d){ return y(d.revenue); })
       .attr("x", function(d){ return x(d.month) })
       .attr("height", function(d){ return height - y(d.revenue); })
       .attr("width", x.bandwidth)
       .attr("fill", "blue");
-  */
+  console.log(rects);
 
 }
