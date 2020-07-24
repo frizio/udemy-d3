@@ -39,42 +39,6 @@ d3.json("data/revenues.json").then( (data) => {
       });
 
       console.log(data);
-
-       // X Scale
-      var x = d3.scaleBand()
-                  .domain(data.map( (d) => { return d.month; } ))
-                  .range([0, width])
-                  .padding(0.2);
-
-      // Y Scale
-      var y = d3.scaleLinear()
-      .domain([0, d3.max(data, (d) => { return d.revenue; })])
-      .range([height, 0]);
-
-      // X Axis
-      var xAxisCall = d3.axisBottom(x);
-      g.append("g")
-          .attr("class", "x axis")
-          .attr("transform", "translate(0," + height +")")
-          .call(xAxisCall);
-
-      // Y Axis
-      var yAxisCall = d3.axisLeft(y)
-          .tickFormat((d) => { return "$" + d; });
-      g.append("g")
-          .attr("class", "y axis")
-          .call(yAxisCall);
-
-      var rects = g.selectAll("rect")
-        .data(data)
-          
-      rects.enter()
-          .append("rect")
-              .attr("y", function(d){ return y(d.revenue); })
-              .attr("x", function(d){ return x(d.month) })
-              .attr("height", function(d){ return height - y(d.revenue); })
-              .attr("width", x.bandwidth)
-              .attr("fill", "blue");
       
       d3.interval( 
         () => {
@@ -85,5 +49,43 @@ d3.json("data/revenues.json").then( (data) => {
 
 function update(data) {
   console.log("Call Update function");
-  console.log(data);
+  // X Scale
+  var x = d3.scaleBand()
+  .domain(data.map( (d) => { return d.month; } ))
+  .range([0, width])
+  .padding(0.2);
+
+  // Y Scale
+  var y = d3.scaleLinear()
+  .domain([0, d3.max(data, (d) => { return d.revenue; })])
+  .range([height, 0]);
+
+  // X Axis
+  var xAxisCall = d3.axisBottom(x);
+  g.append("g")
+  .attr("class", "x axis")
+  .attr("transform", "translate(0," + height +")")
+  .call(xAxisCall);
+
+  // Y Axis
+  var yAxisCall = d3.axisLeft(y)
+  .tickFormat((d) => { return "$" + d; });
+  g.append("g")
+  .attr("class", "y axis")
+  .call(yAxisCall);
+
+  //Bars
+  /*
+  var rects = g.selectAll("rect")
+  .data(data)
+  
+  rects.enter()
+  .append("rect")
+      .attr("y", function(d){ return y(d.revenue); })
+      .attr("x", function(d){ return x(d.month) })
+      .attr("height", function(d){ return height - y(d.revenue); })
+      .attr("width", x.bandwidth)
+      .attr("fill", "blue");
+  */
+
 }
