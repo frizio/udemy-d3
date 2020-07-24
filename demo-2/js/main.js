@@ -5,6 +5,9 @@ var width = 600 - margin.left - margin.right,
 
 var flag = true;
 
+var time = 1000;
+var t = d3.transition().duration(750);
+
 var g = d3.select("#chart-area")
             .append("svg")
                 .attr("width", width + margin.left + margin.right)
@@ -63,7 +66,7 @@ d3.json("data/revenues.json").then( (data) => {
           update(data);
           flag = !flag;
         }, 
-        2000);
+        time);
 
       update(data);
 })
@@ -90,7 +93,12 @@ function update(data) {
                .data(data)
   
   // EXIT old element not present in the new data.
-  rects.exit().remove();
+  rects.exit()
+          .attr('fill', 'red')
+       .transition(t)
+          .attr("y", y[0])
+          .attr("height", 0)
+          .remove();
 
   // UPDATE old element in the new data
   rects.attr("y", function(d){ return y(d[value]); })
@@ -102,11 +110,14 @@ function update(data) {
   // ENTER new element present in the new data
   rects.enter()
     .append("rect")
-      .attr("y", function(d){ return y(d[value]); })
       .attr("x", function(d){ return x(d.month) })
-      .attr("height", function(d){ return height - y(d[value]); })
       .attr("width", x.bandwidth)
-      .attr("fill", "blue");
+      .attr("y", y[0])
+      .attr("height", 0)
+      .attr("fill", "blue")
+    .transition(t)
+      .attr("y", function(d){ return y(d[value]); })
+      .attr("height", function(d){ return height - y(d[value]); })
 
   var label = flag ? 'Revenue' : 'Profit' ;
   yLabel.text(label);
