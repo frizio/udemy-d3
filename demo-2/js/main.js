@@ -10,6 +10,14 @@ var g = d3.select("#chart-area")
             .append("g")
                 .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
 
+var xAxisGroup = g.append("g")
+                  .attr("class", "x axis")
+                  .attr("transform", "translate(0," + height +")")
+                  
+var yAxisGroup = g.append("g")
+                  .attr("class", "y axis")
+                  
+
 // X Scale
 var x = d3.scaleBand()
 .range([0, width])
@@ -54,6 +62,7 @@ d3.json("data/revenues.json").then( (data) => {
           update(data);
         }, 
         1500);
+      
 })
 
 function update(data) {
@@ -64,17 +73,13 @@ function update(data) {
 
   // X Axis
   var xAxisCall = d3.axisBottom(x);
-  g.append("g")
-  .attr("class", "x axis")
-  .attr("transform", "translate(0," + height +")")
-  .call(xAxisCall);
-
+  xAxisGroup.call(xAxisCall);
+  
   // Y Axis
   var yAxisCall = d3.axisLeft(y)
-  .tickFormat((d) => { return "$" + d; });
-  g.append("g")
-  .attr("class", "y axis")
-  .call(yAxisCall);
+                    .tickFormat((d) => { return "$" + d; });
+  yAxisGroup.call(yAxisCall);
+  
 
   //Bars
   /*
