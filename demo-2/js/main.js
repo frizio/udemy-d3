@@ -10,6 +10,15 @@ var g = d3.select("#chart-area")
             .append("g")
                 .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
 
+// X Scale
+var x = d3.scaleBand()
+.range([0, width])
+.padding(0.2);
+
+// Y Scale
+var y = d3.scaleLinear()
+.range([height, 0]);
+
 // X Label
 g.append("text")
     .attr("class", "x axis-label")
@@ -49,16 +58,9 @@ d3.json("data/revenues.json").then( (data) => {
 
 function update(data) {
   console.log("Call Update function");
-  // X Scale
-  var x = d3.scaleBand()
-  .domain(data.map( (d) => { return d.month; } ))
-  .range([0, width])
-  .padding(0.2);
 
-  // Y Scale
-  var y = d3.scaleLinear()
-  .domain([0, d3.max(data, (d) => { return d.revenue; })])
-  .range([height, 0]);
+  x.domain(data.map( (d) => { return d.month; } ))
+  y.domain([0, d3.max(data, (d) => { return d.revenue; })])
 
   // X Axis
   var xAxisCall = d3.axisBottom(x);
