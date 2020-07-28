@@ -15,6 +15,19 @@ var g = d3.select("#chart-area")
     .append("g")
         .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
 
+// Scales
+var x = d3.scaleLog()
+    .base(10)
+    .range([0, width])
+    .domain([142, 150000]);
+var y = d3.scaleLinear()
+    .range([height, 0])
+    .domain([0, 90]);
+var area = d3.scaleLinear()
+    .range([25*Math.PI, 1500*Math.PI])
+    .domain([2000, 1400000000]);
+var continentColor = d3.scaleOrdinal(d3.schemePastel1);
+
 
 d3.json("data/data.json").then(function(data){
 	console.log(data);
