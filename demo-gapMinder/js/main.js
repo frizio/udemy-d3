@@ -5,7 +5,7 @@
 */
 
 var margin = { left:80, right:20, top:50, bottom:100 };
-var height = 600 - margin.top  W- margin.bottom, 
+var height = 600 - margin.top  - margin.bottom;
 var width  = 800 - margin.left - margin.right;
 
 var g = d3.select("#chart-area")
@@ -27,6 +27,23 @@ var area = d3.scaleLinear()
     .range([25*Math.PI, 1500*Math.PI])
     .domain([2000, 1400000000]);
 var continentColor = d3.scaleOrdinal(d3.schemePastel1);
+
+// X Axis
+var xAxisCall = d3.axisBottom(x)
+    .tickValues([400, 4000, 40000])
+    .tickFormat(d3.format("$"));
+g.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + height +")")
+    .call(xAxisCall);
+
+// Y Axis
+var yAxisCall = d3.axisLeft(y)
+    .tickFormat(function(d){ return +d; });
+g.append("g")
+    .attr("class", "y axis")
+    .call(yAxisCall);
+
 
 
 d3.json("data/data.json").then(function(data){
