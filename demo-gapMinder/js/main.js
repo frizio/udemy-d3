@@ -68,5 +68,21 @@ var timeLabel = g.append("text")
 
 
 d3.json("data/data.json").then(function(data){
-	console.log(data);
+  console.log(data);
+  
+  // Clean data
+  const formattedData = data.map( (year) => {
+    return year["countries"]
+    .filter( (country) => {
+        var dataExists = (country.income && country.life_exp);
+        return dataExists
+    })
+    .map( (country) => {
+        country.income = +country.income;
+        country.life_exp = +country.life_exp;
+        return country;
+    })
+  });
+  console.log(formattedData);
+
 })
