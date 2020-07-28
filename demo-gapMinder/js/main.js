@@ -68,7 +68,7 @@ var timeLabel = g.append("text")
 
 var time = 0;
 
-d3.json("data/data.json").then(function(data){
+d3.json("data/data.json").then( (data) => {
   console.log(data);
   
   // Clean data
