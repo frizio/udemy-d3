@@ -86,3 +86,34 @@ d3.json("data/data.json").then(function(data){
   console.log(formattedData);
 
 })
+
+
+function update(data) {
+  // Standard transition time for the visualization
+  var t = d3.transition()
+      .duration(100);
+
+  // JOIN new data with old elements.
+  var circles = g.selectAll("circle").data(data, function(d){
+      return d.country;
+  });
+
+  // EXIT old elements not present in new data.
+  circles.exit()
+      .attr("class", "exit")
+      .remove();
+
+  // ENTER new elements present in new data.
+  circles.enter()
+      .append("circle")
+      .attr("class", "enter")
+      .attr("fill", function(d) { return continentColor(d.continent); })
+      .merge(circles)
+      .transition(t)
+          .attr("cy", function(d){ return y(d.life_exp); })
+          .attr("cx", function(d){ return x(d.income) })
+          .attr("r", function(d){ return Math.sqrt(area(d.population) / Math.PI) });
+
+  // Update the time label
+  timeLabel.text(+(time + 1800))
+}
