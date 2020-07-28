@@ -66,6 +66,7 @@ var timeLabel = g.append("text")
     .attr("text-anchor", "middle")
     .text("1800");
 
+var time = 0;
 
 d3.json("data/data.json").then(function(data){
   console.log(data);
@@ -84,6 +85,16 @@ d3.json("data/data.json").then(function(data){
     })
   });
   console.log(formattedData);
+
+  // Run the code every 0.1 second
+  d3.interval( () => {
+    // At the end of our data, loop back
+    time = (time < 214) ? time+1 : 0
+    update(formattedData[time]);
+  }, 100);
+
+  // First run of the visualization
+  update(formattedData[0]);
 
 })
 
