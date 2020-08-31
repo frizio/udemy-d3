@@ -177,3 +177,8 @@ $("#play-button").on("click", function() {
         clearInterval(interval);
     }
 })
+
+$("#reset-button").on("click", function(){
+    time = 0;
+    update(formattedData[0]);
+})
