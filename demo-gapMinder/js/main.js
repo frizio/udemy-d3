@@ -87,6 +87,13 @@ continents.forEach(function(continent, i) {
         .text(continent);
 });
 
+// Tooltip
+var tip = d3.tip().attr('class', 'd3-tip')
+    .html(function(d) {
+        return d;
+    });
+g.call(tip);
+
 var time = 0;
 
 d3.json("data/data.json").then( (data) => {
@@ -140,6 +147,8 @@ function update(data) {
       .append("circle")
       .attr("class", "enter")
       .attr("fill", function(d) { return continentColor(d.continent); })
+      .on("mouseover", tip.show)
+      .on("mouseout", tip.hide)
       .merge(circles)
       .transition(t)
           .attr("cy", function(d){ return y(d.life_exp); })
