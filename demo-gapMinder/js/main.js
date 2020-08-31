@@ -99,13 +99,16 @@ var tip = d3.tip().attr('class', 'd3-tip')
     });
 g.call(tip);
 
+
 var time = 0;
+var interval;
+var formattedData;
 
 d3.json("data/data.json").then( (data) => {
   console.log(data);
   
   // Clean data
-  const formattedData = data.map( (year) => {
+  formattedData = data.map( (year) => {
     return year["countries"]
     .filter( (country) => {
         var dataExists = (country.income && country.life_exp);
@@ -118,15 +121,6 @@ d3.json("data/data.json").then( (data) => {
     })
   });
   console.log(formattedData);
-
-  /*
-  // Run the code every 0.1 second
-  d3.interval( () => {
-    // At the end of our data, loop back
-    time = (time < 214) ? time+1 : 0
-    update(formattedData[time]);
-  }, 100);
-  */
 
   // First run of the visualization
   update(formattedData[0]);
@@ -170,3 +164,16 @@ function update(data) {
   // Update the time label
   timeLabel.text(+(time + 1800))
 }
+
+// Event listeners
+$("#play-button").on("click", function() {
+    var button = $(this);
+    if (button.text() == "Play") {
+        button.text("Pause");
+        interval = setInterval(step, 100);
+    }
+    else {
+        button.text("Play");
+        clearInterval(interval);
+    }
+})
