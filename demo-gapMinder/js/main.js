@@ -119,18 +119,25 @@ d3.json("data/data.json").then( (data) => {
   });
   console.log(formattedData);
 
+  /*
   // Run the code every 0.1 second
   d3.interval( () => {
     // At the end of our data, loop back
     time = (time < 214) ? time+1 : 0
     update(formattedData[time]);
   }, 100);
+  */
 
   // First run of the visualization
   update(formattedData[0]);
 
 })
 
+function step() {
+  // At the end of our data, loop back
+  time = (time < 214) ? time+1 : 0
+  update(formattedData[time]);
+}
 
 function update(data) {
   // Standard transition time for the visualization
