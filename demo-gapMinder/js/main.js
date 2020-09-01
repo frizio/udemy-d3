@@ -138,6 +138,15 @@ function update(data) {
   var t = d3.transition()
       .duration(100);
 
+  var continent = $("#continent-select").val();
+  var data = data.filter(function(d){
+    if (continent == "all") { 
+      return true; 
+    } else {
+        return d.continent == continent;
+    }
+  })
+
   // JOIN new data with old elements.
   var circles = g.selectAll("circle").data(data, function(d){
       return d.country;
@@ -181,4 +190,8 @@ $("#play-button").on("click", function() {
 $("#reset-button").on("click", function(){
     time = 0;
     update(formattedData[0]);
+})
+
+$("#continent-select").on("change", function(){
+    update(formattedData[time]);
 })
